@@ -13,6 +13,14 @@ extension UIView {
     public var rac_backgroundColor: MutableProperty<UIColor?> {
         return lazyMutableProperty(self, &ReactiveBindAssocationKeys.BackgroundColorProperty, { self.backgroundColor = $0 }, { self.backgroundColor  })
     }
+
+    public var rac_tapped: SignalProducer<Void, NoError> {
+        return SignalProducer { [weak self] (observer, disposable) in
+            self?.tapped({ (tgr) -> () in
+                observer.sendNext()
+            })
+        }
+    }
 }
 
 extension UIBarItem {
